@@ -1,0 +1,58 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap");
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    @apply scroll-smooth;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+
+  ::selection {
+    @apply bg-primary text-white;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .gradient-violet {
+    background: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%);
+  }
+
+  .gradient-text {
+    background: linear-gradient(135deg, #7c3aed 0%, #a855f7 60%, #c084fc 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .glow-violet {
+    box-shadow: 0 0 20px rgba(124, 58, 237, 0.4);
+  }
+
+  .card-surface {
+    @apply bg-surface border border-border rounded-lg;
+  }
+
+  .code-address {
+    @apply font-mono text-sm bg-muted px-2 py-0.5 rounded;
+  }
+
+  .input-field {
+    @apply w-full rounded-md border border-border bg-muted px-3 py-2 text-sm outline-none
+           focus:border-primary transition-colors placeholder:text-foreground-secondary/50;
+  }
+}
