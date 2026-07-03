@@ -49,6 +49,8 @@ export interface Board {
   threshold: number;
   totalProposals: number;
   executedProposals: number;
+  /** USDC balance held by the contract treasury (human-readable). */
+  treasuryBalance?: string;
 }
 
 export interface DeployBoardInput {
@@ -72,5 +74,7 @@ export interface ApiBoard {
 export interface LiveStats {
   totalBoards: number;
   proposalsExecuted: number;
+  proposalsCreated: number;
+  proposalsPending: number;
   usdcGoverned: number;
 }
