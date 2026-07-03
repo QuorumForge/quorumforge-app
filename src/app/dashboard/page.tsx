@@ -6,6 +6,7 @@ import { motion } from "framer-motion";
 import { Wallet, ArrowRight, Pen, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { EmptyState } from "@/components/ui/EmptyState";
 import { ProposalCard } from "@/components/ProposalCard";
 import { useWallet } from "@/lib/wallet";
 import { truncateAddress } from "@/lib/utils";
@@ -99,9 +100,11 @@ export default function DashboardPage() {
           {pendingLoading ? (
             <div className="text-foreground-secondary text-sm">Loading…</div>
           ) : pending.length === 0 ? (
-            <div className="card-surface p-8 text-center text-sm text-foreground-secondary">
-              No proposals awaiting your signature. 🎉
-            </div>
+            <EmptyState
+              icon={Pen}
+              title="No pending signatures"
+              description="You're all caught up. No proposals awaiting your signature."
+            />
           ) : (
             <div className="flex flex-col gap-3">
               {pending.map((p) => (
@@ -125,11 +128,15 @@ export default function DashboardPage() {
           {boardsLoading ? (
             <div className="text-foreground-secondary text-sm">Loading…</div>
           ) : boards.length === 0 ? (
-            <div className="card-surface p-6 text-center text-sm text-foreground-secondary">
-              You are not a member of any board yet.{" "}
-              <Link href="/deploy" className="text-primary hover:underline">Deploy one</Link>.
-            </div>
-          ) : (
+            <EmptyState
+              title="No boards yet"
+              description="You are not a member of any board."
+              action={
+                <Button asChild size="sm" variant="outline">
+                  <Link href="/deploy">Deploy one</Link>
+                </Button>
+              }
+            /> : (
             <div className="flex flex-col gap-3">
               {boards.map((board) => (
                 <motion.div
