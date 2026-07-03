@@ -68,3 +68,26 @@ export function formatAmount(raw: string | number | bigint, decimals: number, sy
   const units = Number(raw) / Math.pow(10, decimals);
   return `${units.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: decimals })} ${symbol}`;
 }
+
+// ── Governance Validation ─────────────────────────────────────────────────────
+
+/**
+ * Returns an error message if the threshold is invalid for the given member count,
+ * or `null` if it is valid.
+ */
+export function validateThreshold(threshold: number, memberCount: number): string | null {
+  if (!Number.isInteger(threshold) || threshold < 1) {
+    return "Threshold must be a positive integer.";
+  }
+  if (threshold > memberCount) {
+    return `Threshold (${threshold}) cannot exceed the number of members (${memberCount}).`;
+  }
+  return null;
+}
+
+/**
+ * Returns `true` if the given array of addresses contains any duplicates.
+ */
+export function hasDuplicateMembers(members: string[]): boolean {
+  return new Set(members).size !== members.length;
+}

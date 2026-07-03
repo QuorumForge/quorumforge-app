@@ -6,7 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { Plus, X, AlertCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { isValidStellarAddress } from "@/lib/utils";
+import { isValidStellarAddress, hasDuplicateMembers } from "@/lib/utils";
 
 const schema = z
   .object({
@@ -52,6 +52,7 @@ export function BoardDeployForm({ onDeploy, isDeploying }: BoardDeployFormProps)
   const onSubmit = async (data: { name: string; threshold: number; initialFunding?: number }) => {
     if (validMembers.length < 2) return;
     if (data.threshold > validMembers.length) return;
+    if (hasDuplicateMembers(validMembers)) return;
     await onDeploy({ ...data, members: validMembers });
   };
 
@@ -136,6 +137,14 @@ export function BoardDeployForm({ onDeploy, isDeploying }: BoardDeployFormProps)
             Your board will require{" "}
             <strong>{threshold} of {validMembers.length}</strong> maintainers to approve any proposal.
           </p>
+        </div>
+      )}
+
+      {/* Duplicate warning */}
+      {hasDuplicateMembers(validMembers) && (
+        <div className="rounded-lg border border-red-500/30 bg-red-500/10 px-4 py-3 text-sm flex items-center gap-2 text-red-400">
+          <AlertCircle className="h-4 w-4 shrink-0" />
+          Duplicate member addresses detected. Each address must appear only once.
         </div>
       )}
 
