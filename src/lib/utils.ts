@@ -40,3 +40,31 @@ export function stellarExpertTxUrl(txHash: string, network: "testnet" | "mainnet
   const net = network === "mainnet" ? "public" : "testnet";
   return `https://stellar.expert/explorer/${net}/tx/${txHash}`;
 }
+
+// ── Amount Formatting ────────────────────────────────────────────────────────
+
+/**
+ * Format a raw stroops value (i128 / 10^7) as a human-readable USDC string.
+ * @example formatUSDC("1000000") → "0.10 USDC"
+ */
+export function formatUSDC(raw: string | number | bigint): string {
+  const units = Number(raw) / 1e7;
+  return `${units.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })} USDC`;
+}
+
+/**
+ * Format a raw stroops value as XLM (7 decimal places).
+ * @example formatXLM("10000000") → "1.00 XLM"
+ */
+export function formatXLM(raw: string | number | bigint): string {
+  const units = Number(raw) / 1e7;
+  return `${units.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 7 })} XLM`;
+}
+
+/**
+ * Format an on-chain amount with a custom decimal precision and symbol.
+ */
+export function formatAmount(raw: string | number | bigint, decimals: number, symbol: string): string {
+  const units = Number(raw) / Math.pow(10, decimals);
+  return `${units.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: decimals })} ${symbol}`;
+}
