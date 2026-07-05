@@ -14,6 +14,8 @@ export interface BoardMember {
   signedCount: number;
   totalProposals: number;
   lastActiveAt?: string;
+  /** Whether this member is currently connected via wallet. */
+  isConnected?: boolean;
 }
 
 export interface Proposal {
