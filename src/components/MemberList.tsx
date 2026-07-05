@@ -65,7 +65,14 @@ export function MemberList({ members, threshold, network, connectedAddress }: Me
               <div className="flex items-center gap-2 shrink-0">
                 <div className="text-right">
                   <div className="text-xs font-medium">{activityPct}%</div>
-                  <div className="w-16 h-1 bg-muted rounded-full mt-1 overflow-hidden">
+                  <div
+                    className="w-16 h-1 bg-muted rounded-full mt-1 overflow-hidden"
+                    role="progressbar"
+                    aria-valuenow={activityPct}
+                    aria-valuemin={0}
+                    aria-valuemax={100}
+                    aria-label={`${activityPct}% participation rate`}
+                  >
                     <div
                       className="h-full bg-primary rounded-full"
                       style={{ width: `${activityPct}%` }}
