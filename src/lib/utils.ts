@@ -91,3 +91,28 @@ export function validateThreshold(threshold: number, memberCount: number): strin
 export function hasDuplicateMembers(members: string[]): boolean {
   return new Set(members).size !== members.length;
 }
+
+// ── Date Helpers ──────────────────────────────────────────────────────────────
+
+/**
+ * Returns a human-readable relative time string (e.g. "2 hours ago", "in 3 days").
+ * Accepts a Unix timestamp in seconds.
+ */
+export function formatRelativeTime(unixSeconds: number): string {
+  const diffMs = unixSeconds * 1000 - Date.now();
+  const diffSec = Math.round(diffMs / 1000);
+  const abs = Math.abs(diffSec);
+  const past = diffSec < 0;
+
+  if (abs < 60) return past ? "just now" : "in a moment";
+  if (abs < 3600) {
+    const m = Math.round(abs / 60);
+    return past ? `${m}m ago` : `in ${m}m`;
+  }
+  if (abs < 86400) {
+    const h = Math.round(abs / 3600);
+    return past ? `${h}h ago` : `in ${h}h`;
+  }
+  const d = Math.round(abs / 86400);
+  return past ? `${d}d ago` : `in ${d}d`;
+}
