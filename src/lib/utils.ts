@@ -92,6 +92,15 @@ export function hasDuplicateMembers(members: string[]): boolean {
   return new Set(members).size !== members.length;
 }
 
+/**
+ * Truncates a proposal description to a maximum character length, appending
+ * an ellipsis if trimmed.
+ */
+export function truncateDescription(text: string, maxLength = 120): string {
+  if (text.length <= maxLength) return text;
+  return text.slice(0, maxLength).trimEnd() + "…";
+}
+
 // ── Date Helpers ──────────────────────────────────────────────────────────────
 
 /**
