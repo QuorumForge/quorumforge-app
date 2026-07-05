@@ -31,6 +31,7 @@ export const metadata: Metadata = {
   icons: {
     icon: "/favicon.ico",
   },
+  keywords: ["stellar", "multisig", "governance", "quorumforge", "soroban", "web3"],
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
