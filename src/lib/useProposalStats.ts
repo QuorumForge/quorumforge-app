@@ -11,6 +11,8 @@ export interface ProposalStats {
   expired: number;
   /** Ratio of executed proposals to total (0–1). */
   executionRate: number;
+  /** Percentage of non-cancelled proposals that were executed (0–100). */
+  approvalPercentage: number;
 }
 
 function computeStats(proposals: Proposal[]): ProposalStats {
@@ -27,6 +29,8 @@ function computeStats(proposals: Proposal[]): ProposalStats {
 
   const total = proposals.length;
   const executionRate = total > 0 ? counts.Executed / total : 0;
+  const decidedCount = counts.Executed + counts.Expired + counts.Cancelled;
+  const approvalPercentage = decidedCount > 0 ? Math.round((counts.Executed / decidedCount) * 100) : 0;
 
   return {
     total,
@@ -35,6 +39,7 @@ function computeStats(proposals: Proposal[]): ProposalStats {
     cancelled: counts.Cancelled,
     expired: counts.Expired,
     executionRate,
+    approvalPercentage,
   };
 }
 
