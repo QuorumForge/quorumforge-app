@@ -1,6 +1,6 @@
 "use client";
 
-import { CheckCircle2, Clock, XCircle, Pen, Zap } from "lucide-react";
+import { CheckCircle2, Clock, XCircle, Pen, Zap, Ban } from "lucide-react";
 import { cn } from "@/lib/utils";
 import type { Proposal } from "@/types";
 
@@ -39,6 +39,13 @@ export function ProposalTimeline({ proposal }: { proposal: Proposal }) {
           label: "Expired",
           status: "complete" as const,
           icon: <XCircle className="h-3.5 w-3.5" />,
+        }
+      : proposal.status === "Cancelled"
+      ? {
+          label: "Cancelled",
+          sublabel: proposal.cancelledAt ? new Date(proposal.cancelledAt).toLocaleString() : undefined,
+          status: "complete" as const,
+          icon: <Ban className="h-3.5 w-3.5" />,
         }
       : {
           label: `Awaiting signatures (${proposal.signers.length}/${proposal.requiredThreshold})`,
