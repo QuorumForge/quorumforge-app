@@ -50,6 +50,11 @@ export function SignatureProgressBar({
           initial={{ width: 0 }}
           animate={{ width: `${pct}%` }}
           transition={{ duration: 0.8, ease: "easeOut" }}
+          role="progressbar"
+          aria-valuenow={collected}
+          aria-valuemin={0}
+          aria-valuemax={required}
+          aria-label={`${collected} of ${required} signatures collected`}
         />
       </div>
       {showAvatars && signers.length > 0 && (
