@@ -32,6 +32,7 @@ export interface Proposal {
   signers: SignatureRecord[];
   requiredThreshold: number;
   executedAt?: string;
+  cancelledAt?: string;
   txHash?: string;
 }
 
