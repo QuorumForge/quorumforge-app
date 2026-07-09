@@ -1,6 +1,6 @@
 "use client";
 
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useMemo } from "@tanstack/react-query";
 import type { Proposal, ProposalStatus } from "@/types";
 
 export interface ProposalStats {
@@ -68,4 +68,12 @@ export function useProposalStats(boardContractId: string | null) {
  */
 export function getTotalSignatures(proposals: { signers: unknown[] }[]): number {
   return proposals.reduce((sum, p) => sum + p.signers.length, 0);
+}
+
+/**
+ * Given a pre-fetched list of proposals, returns memoised stats without
+ * triggering an extra fetch. Useful when the parent already has the data.
+ */
+export function useComputedStats(proposals: Proposal[]): ProposalStats {
+  return useMemo(() => computeStats(proposals), [proposals]);
 }
