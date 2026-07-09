@@ -13,7 +13,8 @@ export function truncateAddress(address: string, chars = 4): string {
 
 /** Validate a Stellar G-address (public key) */
 export function isValidStellarAddress(address: string): boolean {
-  return /^G[A-Z2-7]{55}$/.test(address);
+  if (!address || typeof address !== "string") return false;
+  return /^G[A-Z2-7]{55}$/.test(address.trim());
 }
 
 /** Format time remaining from a Unix timestamp (seconds) */
