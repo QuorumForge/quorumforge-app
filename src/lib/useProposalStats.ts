@@ -69,10 +69,3 @@ export function useProposalStats(boardContractId: string | null) {
 export function getTotalSignatures(proposals: { signers: unknown[] }[]): number {
   return proposals.reduce((sum, p) => sum + p.signers.length, 0);
 }
-
-/**
- * Returns the total number of signatures collected across all proposals.
- */
-export function getTotalSignatures(proposals: { signers: unknown[] }[]): number {
-  return proposals.reduce((sum, p) => sum + p.signers.length, 0);
-}
