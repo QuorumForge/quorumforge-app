@@ -129,3 +129,32 @@ export function formatRelativeTime(unixSeconds: number): string {
   const d = Math.round(abs / 86400);
   return past ? `${d}d ago` : `in ${d}d`;
 }
+
+// ── Stroop / Amount Helpers ───────────────────────────────────────────────────
+
+/**
+ * Converts a human-readable decimal string to raw stroops (multiplied by 10^7).
+ * Returns NaN if the input is not a valid number.
+ * @example parseStroops("1.5") → 15000000
+ */
+export function parseStroops(humanAmount: string): number {
+  const n = parseFloat(humanAmount);
+  if (isNaN(n)) return NaN;
+  return Math.round(n * 1e7);
+}
+
+/**
+ * Clamps a numeric amount between a min and max (inclusive).
+ * @example clampAmount(150, 0, 100) → 100
+ */
+export function clampAmount(value: number, min: number, max: number): number {
+  return Math.min(Math.max(value, min), max);
+}
+
+/**
+ * Returns `true` if the given string represents a positive non-zero number.
+ */
+export function isPositiveAmount(value: string): boolean {
+  const n = parseFloat(value);
+  return !isNaN(n) && n > 0;
+}
