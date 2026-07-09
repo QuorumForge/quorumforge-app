@@ -58,18 +58,20 @@ export function SignatureProgressBar({
         />
       </div>
       {showAvatars && signers.length > 0 && (
-        <div className="flex items-center gap-1.5 mt-1">
+        <div className="flex items-center gap-1.5 mt-1" role="list" aria-label="Signers">
           {signers.map((s) => (
             <div
               key={s.address}
               title={s.address}
+              role="listitem"
+              aria-label={`Signed by ${s.address}`}
               className="flex h-6 w-6 items-center justify-center rounded-full bg-primary/20 border border-primary/40 text-xs font-mono text-primary"
             >
               {s.address.slice(1, 3)}
             </div>
           ))}
           {collected > signers.length && (
-            <span className="text-xs text-foreground-secondary">+{collected - signers.length}</span>
+            <span className="text-xs text-foreground-secondary">+{collected - signers.length} more</span>
           )}
         </div>
       )}
