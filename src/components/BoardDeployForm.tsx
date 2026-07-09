@@ -10,7 +10,10 @@ import { isValidStellarAddress, hasDuplicateMembers } from "@/lib/utils";
 
 const schema = z
   .object({
-    name: z.string().min(3, "Board name must be at least 3 characters"),
+    name: z
+      .string()
+      .min(3, "Board name must be at least 3 characters")
+      .max(64, "Board name cannot exceed 64 characters"),
     threshold: z.coerce.number().int().min(1),
     initialFunding: z.coerce.number().min(0).optional(),
   })
@@ -61,8 +64,8 @@ export function BoardDeployForm({ onDeploy, isDeploying }: BoardDeployFormProps)
       {/* Board name */}
       <div>
         <label className="block text-sm font-medium mb-1.5">Board Name</label>
-        <input {...register("name")} placeholder="e.g. My Project Maintainers" className="input-field w-full" />
-        {errors.name && <p className="text-xs text-red-400 mt-1">{errors.name.message}</p>}
+        <input {...register("name")} placeholder="e.g. My Project Maintainers" className="input-field w-full" maxLength={64} />
+        {errors.name && <p className="text-xs text-red-400 mt-1" role="alert">{errors.name.message}</p>}
       </div>
 
       {/* Members */}
