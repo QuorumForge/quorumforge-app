@@ -158,3 +158,30 @@ export function isPositiveAmount(value: string): boolean {
   const n = parseFloat(value);
   return !isNaN(n) && n > 0;
 }
+
+/**
+ * Returns `true` if the given Unix timestamp (seconds) falls on today's date (local time).
+ */
+export function isToday(unixSeconds: number): boolean {
+  const d = new Date(unixSeconds * 1000);
+  const now = new Date();
+  return (
+    d.getFullYear() === now.getFullYear() &&
+    d.getMonth() === now.getMonth() &&
+    d.getDate() === now.getDate()
+  );
+}
+
+/**
+ * Formats a Unix timestamp (seconds) as a short date string.
+ * Shows "Today" if the date is today, otherwise shows "MMM D, YYYY".
+ * @example formatShortDate(1700000000) → "Nov 14, 2023"
+ */
+export function formatShortDate(unixSeconds: number): string {
+  if (isToday(unixSeconds)) return "Today";
+  return new Date(unixSeconds * 1000).toLocaleDateString("en-US", {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+  });
+}
