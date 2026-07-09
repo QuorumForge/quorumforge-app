@@ -80,6 +80,9 @@ export function validateThreshold(threshold: number, memberCount: number): strin
   if (!Number.isInteger(threshold) || threshold < 1) {
     return "Threshold must be a positive integer.";
   }
+  if (memberCount === 0) {
+    return "Cannot set a threshold with no members.";
+  }
   if (threshold > memberCount) {
     return `Threshold (${threshold}) cannot exceed the number of members (${memberCount}).`;
   }
