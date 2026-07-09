@@ -22,7 +22,7 @@ export function MemberList({ members, threshold, network, connectedAddress }: Me
           {threshold}-of-{members.length} required
         </span>
       </div>
-      <ul className="divide-y divide-border">
+      <ul className="divide-y divide-border" role="list" aria-label="Board members">
         {members.map((member) => {
           const isYou = connectedAddress === member.address;
           const activityPct =
@@ -52,9 +52,10 @@ export function MemberList({ members, threshold, network, connectedAddress }: Me
                       href={stellarExpertContractUrl(member.address, network)}
                       target="_blank"
                       rel="noopener noreferrer"
+                      aria-label={`View ${truncateAddress(member.address, 4)} on Stellar Expert`}
                       className="text-foreground-secondary hover:text-primary transition-colors"
                     >
-                      <ExternalLink className="h-3 w-3" />
+                      <ExternalLink className="h-3 w-3" aria-hidden="true" />
                     </a>
                   </div>
                   <p className="text-xs text-foreground-secondary mt-0.5">
