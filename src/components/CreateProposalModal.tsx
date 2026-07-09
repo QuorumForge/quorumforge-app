@@ -21,7 +21,10 @@ const PROPOSAL_TYPES: { value: ProposalType; label: string; description: string 
 
 const baseSchema = z.object({
   type: z.enum(["ResolveIssue", "TransferFunds", "AddMember", "RemoveMember", "UpdateThreshold"]),
-  description: z.string().min(10, "Description must be at least 10 characters"),
+  description: z
+    .string()
+    .min(10, "Description must be at least 10 characters")
+    .max(256, "Description cannot exceed 256 characters"),
   ttlDays: z.coerce.number().int().min(1).max(30),
 });
 
@@ -48,10 +51,12 @@ export function CreateProposalModal({ boardContractId, memberCount, onSubmit }: 
   const [selectedType, setSelectedType] = useState<ProposalType>("ResolveIssue");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const { register, handleSubmit, reset, formState: { errors } } = useForm({
+  const { register, handleSubmit, reset, watch, formState: { errors } } = useForm({
     resolver: zodResolver(baseSchema),
     defaultValues: { type: "ResolveIssue", description: "", ttlDays: 7 },
   });
+
+  const descriptionValue = watch("description") ?? "";
 
   const handleFormSubmit = async (data: Record<string, unknown>) => {
     setIsSubmitting(true);
@@ -106,12 +111,18 @@ export function CreateProposalModal({ boardContractId, memberCount, onSubmit }: 
               <textarea
                 {...register("description")}
                 rows={3}
+                maxLength={256}
                 placeholder="What does this proposal do?"
                 className="w-full rounded-md border border-border bg-muted px-3 py-2 text-sm outline-none focus:border-primary resize-none"
               />
-              {errors.description && (
-                <p className="text-xs text-red-400 mt-1">{errors.description.message as string}</p>
-              )}
+              <div className="flex items-center justify-between mt-1">
+                {errors.description ? (
+                  <p className="text-xs text-red-400" role="alert">{errors.description.message as string}</p>
+                ) : <span />}
+                <span className={`text-xs ${descriptionValue.length > 230 ? "text-amber-400" : "text-foreground-secondary"}`}>
+                  {descriptionValue.length}/256
+                </span>
+              </div>
             </div>
 
             {/* Payload fields by type */}
