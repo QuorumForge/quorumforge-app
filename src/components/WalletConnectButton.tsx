@@ -11,11 +11,17 @@ export function WalletConnectButton() {
 
   if (!address) {
     return (
-      <Button onClick={connect} disabled={isConnecting} size="sm">
+      <Button
+        onClick={connect}
+        disabled={isConnecting}
+        size="sm"
+        aria-busy={isConnecting}
+        aria-label={isConnecting ? "Connecting to Freighter wallet" : "Connect Freighter wallet"}
+      >
         {isConnecting ? (
-          <Loader2 className="h-4 w-4 animate-spin mr-2" />
+          <Loader2 className="h-4 w-4 animate-spin mr-2" aria-hidden="true" />
         ) : (
-          <Wallet className="h-4 w-4 mr-2" />
+          <Wallet className="h-4 w-4 mr-2" aria-hidden="true" />
         )}
         {isConnecting ? "Connecting..." : "Connect Freighter"}
       </Button>
