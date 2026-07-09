@@ -51,7 +51,7 @@ export function ProposalCard({ proposal, canSign, onSign, isSigning }: ProposalC
       <div className="flex items-start justify-between gap-3 mb-3">
         <div className="flex items-center gap-2 flex-wrap">
           <Badge variant="default">{TYPE_LABELS[proposal.type]}</Badge>
-          <Badge variant={STATUS_VARIANTS[proposal.status]} className="gap-1">
+          <Badge variant={STATUS_VARIANTS[proposal.status]} className="gap-1" role="status">
             {STATUS_ICONS[proposal.status]}
             {proposal.status}
           </Badge>
@@ -86,8 +86,9 @@ export function ProposalCard({ proposal, canSign, onSign, isSigning }: ProposalC
             onClick={() => onSign?.(proposal.id)}
             disabled={isSigning}
             className="w-full gap-2"
+            aria-label={`Sign proposal: ${proposal.description}`}
           >
-            <Pen className="h-3.5 w-3.5" />
+            <Pen className="h-3.5 w-3.5" aria-hidden="true" />
             {isSigning ? "Signing..." : "Sign Proposal"}
           </Button>
         </div>
