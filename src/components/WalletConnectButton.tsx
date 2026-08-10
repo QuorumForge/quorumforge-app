@@ -11,20 +11,27 @@ export function WalletConnectButton() {
 
   if (!address) {
     return (
-      <Button
-        onClick={connect}
-        disabled={isConnecting}
-        size="sm"
-        aria-busy={isConnecting}
-        aria-label={isConnecting ? "Connecting to Freighter wallet" : "Connect Freighter wallet"}
-      >
-        {isConnecting ? (
-          <Loader2 className="h-4 w-4 animate-spin mr-2" aria-hidden="true" />
-        ) : (
-          <Wallet className="h-4 w-4 mr-2" aria-hidden="true" />
+      <div className="flex flex-col items-end gap-1">
+        <Button
+          onClick={connect}
+          disabled={isConnecting}
+          size="sm"
+          aria-busy={isConnecting}
+          aria-label={isConnecting ? "Connecting to Freighter wallet" : "Connect Freighter wallet"}
+        >
+          {isConnecting ? (
+            <Loader2 className="h-4 w-4 animate-spin mr-2" aria-hidden="true" />
+          ) : (
+            <Wallet className="h-4 w-4 mr-2" aria-hidden="true" />
+          )}
+          {isConnecting ? "Connecting..." : "Connect Freighter"}
+        </Button>
+        {error && (
+          <p className="max-w-xs text-right text-xs text-red-400" role="alert">
+            {error}
+          </p>
         )}
-        {isConnecting ? "Connecting..." : "Connect Freighter"}
-      </Button>
+      </div>
     );
   }
 

@@ -22,15 +22,27 @@ export function useWallet() {
     setError(null);
     try {
       const freighter = await import("@stellar/freighter-api");
-      const connected = await freighter.isConnected();
-      if (!connected) {
+      const installed = await freighter.isConnected();
+      if (!installed) {
         throw new Error("Freighter extension not found. Please install it.");
       }
-      await freighter.setAllowed();
-      const publicKey = await freighter.getPublicKey();
+
+      // requestAccess opens Freighter's "Connection Request" popup and returns G-address.
+      const publicKey = await freighter.requestAccess();
+      if (!publicKey) {
+        throw new Error("Connection cancelled in Freighter.");
+      }
+
       const details = await freighter.getNetworkDetails();
       const passphrase = details?.networkPassphrase ?? String(await freighter.getNetwork());
       const net = passphrase.includes("Test SDF") ? "testnet" : "mainnet";
+
+      if (net !== "testnet") {
+        throw new Error(
+          "Freighter is on Mainnet. Switch to Testnet in Freighter (Settings → Network → Testnet), then connect again."
+        );
+      }
+
       setAddress(publicKey);
       setNetwork(net);
       sessionStorage.setItem(
