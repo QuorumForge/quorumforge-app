@@ -13,12 +13,12 @@ QuorumForge replaces the single G-address bottleneck that plagues open-source St
 
 | | |
 |---|---|
+| **Live app** | [quorumforge-app.vercel.app](https://quorumforge-app.vercel.app/board/CANU3HVHBFRT2CSZ73ZVDYKYNZMRP6J65KGO4QOTVA45AKORFA46UQ3V) |
 | **Contract** | [`CANU3HVHBFRT2CSZ73ZVDYKYNZMRP6J65KGO4QOTVA45AKORFA46UQ3V`](https://stellar.expert/explorer/testnet/contract/CANU3HVHBFRT2CSZ73ZVDYKYNZMRP6J65KGO4QOTVA45AKORFA46UQ3V) |
-| **App board URL** | `/board/CANU3HVHBFRT2CSZ73ZVDYKYNZMRP6J65KGO4QOTVA45AKORFA46UQ3V` |
-| **Network** | Testnet (Freighter → switch to Testnet; fund via Friendbot) |
-| **Proven flow** | create proposal → 2-of-3 signs → auto-execute (on-chain events verified) |
+| **Network** | Testnet — Freighter must be on **Testnet** (Settings → Network) |
+| **Proven flow** | create proposal → 2-of-3 signs → auto-execute ([tx proof](https://stellar.expert/explorer/testnet/tx/c9ba9af779457cbc274117d318deaba7ace532ab6e51e4497f0a96d58519b5fa)) |
 
-The dashboard reads live Soroban state (no mocks) and signs with Freighter.
+The dashboard reads live Soroban state (no mocks). Connect Freighter on Testnet to interact; view-only works without a wallet.
 
 ---
 
