@@ -6,6 +6,7 @@
 [![Built with Next.js 14](https://img.shields.io/badge/Next.js-14-black)](https://nextjs.org)
 [![Stellar Network](https://img.shields.io/badge/Network-Stellar-blue)](https://stellar.org)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](./CONTRIBUTING.md)
+[![Live Demo](https://img.shields.io/badge/Live_Demo-Testnet_board-7c3aed?style=for-the-badge)](https://quorumforge-app.vercel.app/board/CANU3HVHBFRT2CSZ73ZVDYKYNZMRP6J65KGO4QOTVA45AKORFA46UQ3V)
 
 QuorumForge replaces the single G-address bottleneck that plagues open-source Stellar projects with a transparent, auditable, N-of-M multi-signature governance board. Any maintainer can propose an action; the contract executes automatically once the required number of co-signers approve — no trusted intermediary, no ceremony.
 
