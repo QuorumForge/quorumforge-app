@@ -26,7 +26,7 @@ export default function DeployPage() {
     setIsDeploying(true);
     setError(null);
     try {
-      // Appeal demo path: register metadata against the live testnet contract.
+      // Register metadata against the live testnet contract.
       // Full wasm deploy-from-browser lands next; the demo board is already initialized.
       const contractId = DEMO_CONTRACT_ID;
       await registerBoardMetadata({

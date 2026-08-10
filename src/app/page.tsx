@@ -213,21 +213,6 @@ export default function LandingPage() {
           </div>
         </div>
       </section>
-
-      <section className="py-16 px-4">
-        <div className="max-w-2xl mx-auto card-elevated p-10 text-center border-primary/20">
-          <h2 className="text-2xl font-bold mb-3">Ready for your appeal review?</h2>
-          <p className="text-foreground-secondary mb-6 leading-relaxed">
-            Open the live board, switch to the Executed tab, and cross-check with Stellar Expert —
-            same state, same contract, no mocks.
-          </p>
-          <Button size="lg" asChild>
-            <Link href={DEMO_URL} className="gap-2">
-              Open live testnet board <ArrowRight className="h-4 w-4" />
-            </Link>
-          </Button>
-        </div>
-      </section>
     </div>
   );
 }

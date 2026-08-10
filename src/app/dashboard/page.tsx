@@ -25,7 +25,7 @@ async function fetchMemberBoards(address: string): Promise<Board[]> {
     if (board.members.some((m) => m.address === address)) {
       return [board];
     }
-    // Still show demo board for discoverability on testnet appeals
+    // Show demo board for discoverability when wallet is not a member
     return [board];
   } catch {
     return [];
