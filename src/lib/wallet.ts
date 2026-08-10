@@ -8,13 +8,12 @@ export function useWallet() {
   const [isConnecting, setIsConnecting] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  // Restore session on mount
   useEffect(() => {
     const stored = sessionStorage.getItem("qf_wallet");
     if (stored) {
-      const { address, network } = JSON.parse(stored);
-      setAddress(address);
-      setNetwork(network);
+      const parsed = JSON.parse(stored) as { address: string; network: "testnet" | "mainnet" };
+      setAddress(parsed.address);
+      setNetwork(parsed.network);
     }
   }, []);
 
@@ -28,12 +27,16 @@ export function useWallet() {
         throw new Error("Freighter extension not found. Please install it.");
       }
       await freighter.setAllowed();
-      const { address } = await freighter.getAddress();
-      const { networkPassphrase } = await freighter.getNetwork();
-      const net = networkPassphrase.includes("Test SDF") ? "testnet" : "mainnet";
-      setAddress(address);
+      const publicKey = await freighter.getPublicKey();
+      const details = await freighter.getNetworkDetails();
+      const passphrase = details?.networkPassphrase ?? String(await freighter.getNetwork());
+      const net = passphrase.includes("Test SDF") ? "testnet" : "mainnet";
+      setAddress(publicKey);
       setNetwork(net);
-      sessionStorage.setItem("qf_wallet", JSON.stringify({ address, network: net }));
+      sessionStorage.setItem(
+        "qf_wallet",
+        JSON.stringify({ address: publicKey, network: net })
+      );
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to connect wallet");
     } finally {

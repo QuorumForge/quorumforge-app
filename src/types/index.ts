@@ -14,8 +14,9 @@ export interface BoardMember {
   signedCount: number;
   totalProposals: number;
   lastActiveAt?: string;
-  /** Whether this member is currently connected via wallet. */
   isConnected?: boolean;
+  /** Participation rate (0–100), derived from signedCount / totalProposals. */
+  participationRate?: number;
 }
 
 export interface Proposal {
@@ -34,6 +35,8 @@ export interface Proposal {
   executedAt?: string;
   cancelledAt?: string;
   txHash?: string;
+  /** Total member count at the time of proposal creation. */
+  totalMembers?: number;
 }
 
 export interface SignatureRecord {
@@ -62,6 +65,8 @@ export interface DeployBoardInput {
   threshold: number;
   initialFunding?: number;
   network: Network;
+  /** Optional short description of the board's purpose (stored off-chain). */
+  description?: string;
 }
 
 // API response shapes
@@ -80,4 +85,8 @@ export interface LiveStats {
   proposalsCreated: number;
   proposalsPending: number;
   usdcGoverned: number;
+  /** Total signatures cast across all proposals. */
+  totalSignatures: number;
+  /** Most recently active board contract ID, if any. */
+  latestBoardId?: string;
 }

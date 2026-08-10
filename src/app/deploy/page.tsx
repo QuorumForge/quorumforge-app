@@ -2,10 +2,13 @@
 
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import Link from "next/link";
 import { BoardDeployForm } from "@/components/BoardDeployForm";
 import { useWallet } from "@/lib/wallet";
 import { Button } from "@/components/ui/button";
-import { Wallet, Shield } from "lucide-react";
+import { Wallet, Shield, ExternalLink } from "lucide-react";
+import { DEMO_CONTRACT_ID, registerBoardMetadata } from "@/lib/soroban";
+import { truncateAddress } from "@/lib/utils";
 
 export default function DeployPage() {
   const router = useRouter();
@@ -23,30 +26,18 @@ export default function DeployPage() {
     setIsDeploying(true);
     setError(null);
     try {
-      // 1. Build and sign the Soroban initialize transaction via Freighter
-      const freighter = await import("@stellar/freighter-api");
-      // Placeholder: in production, construct the Soroban contract invocation XDR
-      // const txXdr = await buildInitializeTx({ ...data, deployer: address });
-      // const signed = await freighter.signTransaction(txXdr, { networkPassphrase: ... });
-      // const result = await submitTx(signed);
-
-      // 2. Save board metadata to DB
-      const res = await fetch("/api/boards", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name: data.name,
-          contractId: `C${Math.random().toString(36).slice(2, 12).toUpperCase()}`, // replace with real contract ID
-          network: "testnet",
-          deployerAddress: address,
-        }),
+      // Appeal demo path: register metadata against the live testnet contract.
+      // Full wasm deploy-from-browser lands next; the demo board is already initialized.
+      const contractId = DEMO_CONTRACT_ID;
+      await registerBoardMetadata({
+        name: data.name,
+        contractId,
+        deployerAddress: address,
+        network: "testnet",
       });
-
-      if (!res.ok) throw new Error("Failed to save board metadata");
-      const board = await res.json();
-      router.push(`/board/${board.contractId}`);
+      router.push(`/board/${contractId}`);
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Deployment failed");
+      setError(err instanceof Error ? err.message : "Registration failed");
     } finally {
       setIsDeploying(false);
     }
@@ -60,11 +51,33 @@ export default function DeployPage() {
             <Shield className="h-5 w-5" />
           </div>
           <div>
-            <h1 className="text-2xl font-bold">Deploy a New Board</h1>
+            <h1 className="text-2xl font-bold">Open the Live Demo Board</h1>
             <p className="text-sm text-foreground-secondary">
-              Create a trustless N-of-M maintainer board on Stellar
+              QuorumForge is live on Stellar Testnet. Register a display name, then propose &amp;
+              sign with Freighter.
             </p>
           </div>
+        </div>
+        <div className="rounded-lg border border-border bg-muted/40 px-4 py-3 text-xs space-y-1">
+          <p>
+            <span className="text-foreground-secondary">Contract ID: </span>
+            <span className="font-mono">{truncateAddress(DEMO_CONTRACT_ID, 10)}</span>
+          </p>
+          <a
+            href={`https://stellar.expert/explorer/testnet/contract/${DEMO_CONTRACT_ID}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1 text-primary hover:underline"
+          >
+            View on Stellar Expert <ExternalLink className="h-3 w-3" />
+          </a>
+          <p className="text-foreground-secondary">
+            Or skip registration and{" "}
+            <Link href={`/board/${DEMO_CONTRACT_ID}`} className="text-primary hover:underline">
+              open the board now
+            </Link>
+            .
+          </p>
         </div>
       </div>
 
@@ -73,7 +86,7 @@ export default function DeployPage() {
           <Wallet className="h-12 w-12 text-foreground-secondary mx-auto mb-4" />
           <h2 className="text-lg font-semibold mb-2">Connect Your Wallet</h2>
           <p className="text-sm text-foreground-secondary mb-6">
-            You need to connect your Freighter wallet to deploy a board.
+            Use Freighter on <strong>Testnet</strong>. Fund via Friendbot if needed.
           </p>
           <Button onClick={connect} disabled={isConnecting} className="gap-2">
             <Wallet className="h-4 w-4" />

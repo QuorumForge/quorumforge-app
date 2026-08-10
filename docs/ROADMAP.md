@@ -6,11 +6,12 @@ This document tracks planned features, improvements, and long-term goals for Quo
 
 ## Near-term (v0.2)
 
-- [ ] **Real Soroban contract integration** — replace mock data fetchers with live `stellar-sdk` contract reads; implement `buildInitializeTx`, `buildSignProposalTx`, etc.
+- [x] **Real Soroban contract integration** — live `get_board` / proposals / sign / create via Freighter + generated bindings against testnet contract `CANU3HVHBFRT2CSZ73ZVDYKYNZMRP6J65KGO4QOTVA45AKORFA46UQ3V`
 - [ ] **Email notifications** — send proposal alerts via SMTP (Resend / SendGrid) in addition to webhooks
 - [ ] **Proposal search and filtering** — filter proposals by type, date range, proposer
 - [ ] **Copy-to-clipboard with toast** — feedback when copying contract addresses
 - [ ] **Mobile-responsive signing flow** — optimized layout for small screens
+- [ ] **Browser wasm deploy** — deploy a fresh board instance from the UI (demo currently uses the shared testnet board)
 
 ## Medium-term (v0.3)
 

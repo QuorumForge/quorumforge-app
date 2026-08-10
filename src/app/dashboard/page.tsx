@@ -10,28 +10,40 @@ import { EmptyState } from "@/components/ui/EmptyState";
 import { ProposalCard } from "@/components/ProposalCard";
 import { useWallet } from "@/lib/wallet";
 import { truncateAddress } from "@/lib/utils";
+import {
+  DEMO_CONTRACT_ID,
+  fetchBoardLive,
+  fetchProposalsLive,
+  signProposalLive,
+} from "@/lib/soroban";
 import type { Board, Proposal } from "@/types";
 
-// Mock fetchers — replace with real contract reads
-async function fetchMemberBoards(_address: string): Promise<Board[]> {
-  return [
-    {
-      id: "1",
-      contractId: "CDEMOBRD1234567890",
-      network: "testnet",
-      name: "Demo Maintainers",
-      deployerAddress: _address,
-      createdAt: new Date().toISOString(),
-      members: [],
-      threshold: 2,
-      totalProposals: 6,
-      executedProposals: 4,
-    },
-  ];
+async function fetchMemberBoards(address: string): Promise<Board[]> {
+  // Demo board is always available; include it if the wallet is a member.
+  try {
+    const board = await fetchBoardLive(DEMO_CONTRACT_ID);
+    if (board.members.some((m) => m.address === address)) {
+      return [board];
+    }
+    // Still show demo board for discoverability on testnet appeals
+    return [board];
+  } catch {
+    return [];
+  }
 }
 
-async function fetchPendingForAddress(_address: string): Promise<Proposal[]> {
-  return [];
+async function fetchPendingForAddress(address: string): Promise<Proposal[]> {
+  try {
+    const board = await fetchBoardLive(DEMO_CONTRACT_ID);
+    if (!board.members.some((m) => m.address === address)) return [];
+    const proposals = await fetchProposalsLive(DEMO_CONTRACT_ID);
+    return proposals.filter(
+      (p) =>
+        p.status === "Pending" && !p.signers.some((s) => s.address === address)
+    );
+  } catch {
+    return [];
+  }
 }
 
 export default function DashboardPage() {
@@ -52,11 +64,14 @@ export default function DashboardPage() {
 
   const signMutation = useMutation({
     mutationFn: async (proposalId: string) => {
-      const freighter = await import("@stellar/freighter-api");
-      // Placeholder: build sign XDR, sign with Freighter, submit
-      console.log("Signing proposal", proposalId);
+      if (!address) throw new Error("Wallet not connected");
+      await signProposalLive(DEMO_CONTRACT_ID, proposalId, address);
     },
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: ["pending-proposals"] }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["pending-proposals"] });
+      queryClient.invalidateQueries({ queryKey: ["proposals"] });
+      queryClient.invalidateQueries({ queryKey: ["board"] });
+    },
   });
 
   if (!address) {
@@ -65,12 +80,18 @@ export default function DashboardPage() {
         <Wallet className="h-14 w-14 text-foreground-secondary mb-4" />
         <h1 className="text-2xl font-bold mb-2">Your Dashboard</h1>
         <p className="text-foreground-secondary mb-6 max-w-sm">
-          Connect your Freighter wallet to view your boards and pending proposals.
+          Connect your Freighter wallet (Testnet) to view boards and pending proposals.
         </p>
         <Button onClick={connect} disabled={isConnecting} className="gap-2">
           <Wallet className="h-4 w-4" />
           {isConnecting ? "Connecting..." : "Connect Freighter"}
         </Button>
+        <p className="mt-6 text-xs text-foreground-secondary">
+          Demo board:{" "}
+          <Link href={`/board/${DEMO_CONTRACT_ID}`} className="text-primary hover:underline font-mono">
+            {truncateAddress(DEMO_CONTRACT_ID, 6)}
+          </Link>
+        </p>
       </div>
     );
   }
@@ -86,13 +107,12 @@ export default function DashboardPage() {
         </div>
         <Button asChild variant="outline" size="sm">
           <Link href="/deploy" className="gap-1.5">
-            Deploy New Board <ArrowRight className="h-3.5 w-3.5" />
+            Register Board <ArrowRight className="h-3.5 w-3.5" />
           </Link>
         </Button>
       </div>
 
       <div className="grid lg:grid-cols-[1fr_360px] gap-6">
-        {/* Pending signatures */}
         <section>
           <h2 className="text-sm font-semibold text-foreground-secondary uppercase tracking-wide mb-3">
             Awaiting Your Signature
@@ -120,7 +140,6 @@ export default function DashboardPage() {
           )}
         </section>
 
-        {/* My boards */}
         <section>
           <h2 className="text-sm font-semibold text-foreground-secondary uppercase tracking-wide mb-3">
             Your Boards
@@ -133,10 +152,11 @@ export default function DashboardPage() {
               description="You are not a member of any board."
               action={
                 <Button asChild size="sm" variant="outline">
-                  <Link href="/deploy">Deploy one</Link>
+                  <Link href={`/board/${DEMO_CONTRACT_ID}`}>Open demo board</Link>
                 </Button>
               }
-            /> : (
+            />
+          ) : (
             <div className="flex flex-col gap-3">
               {boards.map((board) => (
                 <motion.div
@@ -149,7 +169,10 @@ export default function DashboardPage() {
                     <div>
                       <div className="flex items-center gap-2 mb-1">
                         <h3 className="font-medium text-sm">{board.name}</h3>
-                        <Badge variant={board.network === "testnet" ? "amber" : "emerald"} className="text-[10px]">
+                        <Badge
+                          variant={board.network === "testnet" ? "amber" : "emerald"}
+                          className="text-[10px]"
+                        >
                           {board.network}
                         </Badge>
                       </div>
@@ -165,8 +188,12 @@ export default function DashboardPage() {
                     </Link>
                   </div>
                   <div className="flex items-center gap-4 mt-3 text-xs text-foreground-secondary">
-                    <span>{board.threshold}-of-M required</span>
-                    <span>{board.executedProposals}/{board.totalProposals} executed</span>
+                    <span>
+                      {board.threshold}-of-{board.members.length} required
+                    </span>
+                    <span>
+                      {board.executedProposals}/{board.totalProposals} executed
+                    </span>
                   </div>
                 </motion.div>
               ))}

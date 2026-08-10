@@ -19,10 +19,12 @@ export function isValidStellarAddress(address: string): boolean {
 
 /** Format time remaining from a Unix timestamp (seconds) */
 export function formatTimeRemaining(expiryLedger: number, currentLedger: number): string {
-  const ledgersLeft = expiryLedger - currentLedger;
-  if (ledgersLeft <= 0) return "Expired";
-  // ~5 seconds per ledger
-  const secondsLeft = ledgersLeft * 5;
+  // Support both ledger deltas and unix-second timestamps (Soroban live data).
+  const looksLikeUnix = expiryLedger > 1_000_000_000;
+  const secondsLeft = looksLikeUnix
+    ? expiryLedger - currentLedger
+    : (expiryLedger - currentLedger) * 5;
+  if (secondsLeft <= 0) return "Expired";
   const hours = Math.floor(secondsLeft / 3600);
   const minutes = Math.floor((secondsLeft % 3600) / 60);
   if (hours > 24) return `${Math.floor(hours / 24)}d remaining`;

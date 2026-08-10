@@ -48,12 +48,13 @@ interface CreateProposalModalProps {
 
 export function CreateProposalModal({ boardContractId, memberCount, onSubmit }: CreateProposalModalProps) {
   const [open, setOpen] = useState(false);
-  const [selectedType, setSelectedType] = useState<ProposalType>("ResolveIssue");
+  // Prefer UpdateThreshold for the live testnet demo (no treasury asset needed).
+  const [selectedType, setSelectedType] = useState<ProposalType>("UpdateThreshold");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const { register, handleSubmit, reset, watch, formState: { errors } } = useForm({
-    resolver: zodResolver(baseSchema),
-    defaultValues: { type: "ResolveIssue", description: "", ttlDays: 7 },
+  const { register, handleSubmit, reset, watch, getValues, formState: { errors } } = useForm({
+    resolver: zodResolver(baseSchema.passthrough()),
+    defaultValues: { type: "UpdateThreshold", description: "", ttlDays: 7 },
   });
 
   const descriptionValue = watch("description") ?? "";
@@ -61,7 +62,20 @@ export function CreateProposalModal({ boardContractId, memberCount, onSubmit }: 
   const handleFormSubmit = async (data: Record<string, unknown>) => {
     setIsSubmitting(true);
     try {
-      await onSubmit({ ...data, type: selectedType });
+      // baseSchema strips unknown keys; merge selected-type payload fields from the raw form.
+      await onSubmit({
+        ...data,
+        type: selectedType,
+        newMember: data.newMember,
+        member: data.member,
+        newThreshold: data.newThreshold !== undefined ? Number(data.newThreshold) : undefined,
+        recipient: data.recipient,
+        amount: data.amount !== undefined ? Number(data.amount) : undefined,
+        asset: data.asset,
+        issueUrl: data.issueUrl,
+        ttlDays: Number(data.ttlDays ?? 7),
+        description: String(data.description ?? ""),
+      });
       reset();
       setOpen(false);
     } finally {

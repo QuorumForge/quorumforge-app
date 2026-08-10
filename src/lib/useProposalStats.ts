@@ -1,6 +1,7 @@
 "use client";
 
-import { useQuery, useMemo } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
+import { useMemo } from "react";
 import type { Proposal, ProposalStatus } from "@/types";
 
 export interface ProposalStats {

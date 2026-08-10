@@ -54,13 +54,28 @@ export default function LandingPage() {
   const { data: stats } = useQuery<LiveStats>({
     queryKey: ["stats"],
     queryFn: async () => {
-      const r = await fetch("/api/boards");
-      const boards = await r.json();
-      return {
-        totalBoards: boards.length ?? 0,
-        proposalsExecuted: 0,
-        usdcGoverned: 0,
-      };
+      try {
+        const { fetchBoardLive, DEMO_CONTRACT_ID } = await import("@/lib/soroban");
+        const board = await fetchBoardLive(DEMO_CONTRACT_ID);
+        return {
+          totalBoards: 1,
+          proposalsExecuted: board.executedProposals,
+          proposalsCreated: board.totalProposals,
+          proposalsPending: Math.max(0, board.totalProposals - board.executedProposals),
+          usdcGoverned: 0,
+          totalSignatures: 0,
+          latestBoardId: DEMO_CONTRACT_ID,
+        } satisfies LiveStats;
+      } catch {
+        return {
+          totalBoards: 1,
+          proposalsExecuted: 0,
+          proposalsCreated: 0,
+          proposalsPending: 0,
+          usdcGoverned: 0,
+          totalSignatures: 0,
+        } satisfies LiveStats;
+      }
     },
   });
 
@@ -89,12 +104,12 @@ export default function LandingPage() {
           </p>
           <div className="flex flex-wrap items-center justify-center gap-3">
             <Button size="lg" asChild>
-              <Link href="/deploy" className="gap-2">
-                Deploy Your Board <ArrowRight className="h-4 w-4" />
+              <Link href="/board/CANU3HVHBFRT2CSZ73ZVDYKYNZMRP6J65KGO4QOTVA45AKORFA46UQ3V" className="gap-2">
+                Open Live Testnet Board <ArrowRight className="h-4 w-4" />
               </Link>
             </Button>
             <Button size="lg" variant="outline" asChild>
-              <Link href="/dashboard">Join Existing Board</Link>
+              <Link href="/deploy">Register / Deploy</Link>
             </Button>
           </div>
         </motion.div>

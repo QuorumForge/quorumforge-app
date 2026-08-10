@@ -9,6 +9,17 @@
 
 QuorumForge replaces the single G-address bottleneck that plagues open-source Stellar projects with a transparent, auditable, N-of-M multi-signature governance board. Any maintainer can propose an action; the contract executes automatically once the required number of co-signers approve — no trusted intermediary, no ceremony.
 
+## Live Demo (Stellar Testnet)
+
+| | |
+|---|---|
+| **Contract** | [`CANU3HVHBFRT2CSZ73ZVDYKYNZMRP6J65KGO4QOTVA45AKORFA46UQ3V`](https://stellar.expert/explorer/testnet/contract/CANU3HVHBFRT2CSZ73ZVDYKYNZMRP6J65KGO4QOTVA45AKORFA46UQ3V) |
+| **App board URL** | `/board/CANU3HVHBFRT2CSZ73ZVDYKYNZMRP6J65KGO4QOTVA45AKORFA46UQ3V` |
+| **Network** | Testnet (Freighter → switch to Testnet; fund via Friendbot) |
+| **Proven flow** | create proposal → 2-of-3 signs → auto-execute (on-chain events verified) |
+
+The dashboard reads live Soroban state (no mocks) and signs with Freighter.
+
 ---
 
 ## Table of Contents
