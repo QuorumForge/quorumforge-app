@@ -38,6 +38,12 @@ export function stellarExpertContractUrl(contractId: string, network: "testnet" 
   return `https://stellar.expert/explorer/${net}/contract/${contractId}`;
 }
 
+/** Stellar Expert link for a public key (G-address) */
+export function stellarExpertAccountUrl(address: string, network: "testnet" | "mainnet" = "testnet") {
+  const net = network === "mainnet" ? "public" : "testnet";
+  return `https://stellar.expert/explorer/${net}/account/${address}`;
+}
+
 /** Stellar Expert link for a transaction */
 export function stellarExpertTxUrl(txHash: string, network: "testnet" | "mainnet" = "testnet") {
   const net = network === "mainnet" ? "public" : "testnet";
