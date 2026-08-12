@@ -76,6 +76,16 @@ QuorumForge makes the honest alternative easy:
 
 ---
 
+## Screenshots
+
+Live demo screenshots are available in the deployed app:
+
+- [View the board on Vercel](https://quorumforge-app.vercel.app/board/CANU3HVHBFRT2CSZ73ZVDYKYNZMRP6J65KGO4QOTVA45AKORFA46UQ3V)
+
+The app is fully interactive on Testnet, so the live board itself serves as the most up-to-date visual reference.
+
+---
+
 ## Architecture
 
 See [ARCHITECTURE.md](./docs/ARCHITECTURE.md) for the full system design, data flow diagrams, and Soroban contract interface specification.
