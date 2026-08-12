@@ -27,7 +27,6 @@ The dashboard reads live Soroban state (no mocks). Connect Freighter on Testnet 
 
 - [Why QuorumForge](#why-quorumforge)
 - [Features](#features)
-- [Screenshots](#screenshots)
 - [Architecture](#architecture)
 - [Tech Stack](#tech-stack)
 - [Getting Started](#getting-started)
