@@ -12,11 +12,11 @@ QuorumForge replaces the single G-address bottleneck that plagues open-source St
 
 ## Live Demo (Stellar Testnet)
 
-| | |
-|---|---|
-| **Live app** | [quorumforge-app.vercel.app](https://quorumforge-app.vercel.app/board/CANU3HVHBFRT2CSZ73ZVDYKYNZMRP6J65KGO4QOTVA45AKORFA46UQ3V) |
-| **Contract** | [`CANU3HVHBFRT2CSZ73ZVDYKYNZMRP6J65KGO4QOTVA45AKORFA46UQ3V`](https://stellar.expert/explorer/testnet/contract/CANU3HVHBFRT2CSZ73ZVDYKYNZMRP6J65KGO4QOTVA45AKORFA46UQ3V) |
-| **Network** | Testnet — Freighter must be on **Testnet** (Settings → Network) |
+|                 |                                                                                                                                                                         |
+| --------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Live app**    | [quorumforge-app.vercel.app](https://quorumforge-app.vercel.app/board/CANU3HVHBFRT2CSZ73ZVDYKYNZMRP6J65KGO4QOTVA45AKORFA46UQ3V)                                         |
+| **Contract**    | [`CANU3HVHBFRT2CSZ73ZVDYKYNZMRP6J65KGO4QOTVA45AKORFA46UQ3V`](https://stellar.expert/explorer/testnet/contract/CANU3HVHBFRT2CSZ73ZVDYKYNZMRP6J65KGO4QOTVA45AKORFA46UQ3V) |
+| **Network**     | Testnet — Freighter must be on **Testnet** (Settings → Network)                                                                                                         |
 | **Proven flow** | create proposal → 2-of-3 signs → auto-execute ([tx proof](https://stellar.expert/explorer/testnet/tx/c9ba9af779457cbc274117d318deaba7ace532ab6e51e4497f0a96d58519b5fa)) |
 
 The dashboard reads live Soroban state (no mocks). Connect Freighter on Testnet to interact; view-only works without a wallet.
@@ -54,12 +54,12 @@ Most Stellar projects — grant recipients, open-source tools, DeFi protocols �
 
 QuorumForge makes the honest alternative easy:
 
-| Before | After |
-|--------|-------|
-| Single G-address | N-of-M multisig board |
+| Before                       | After                       |
+| ---------------------------- | --------------------------- |
+| Single G-address             | N-of-M multisig board       |
 | Implicit trust in one person | Explicit on-chain threshold |
-| No audit trail | Full public history |
-| Manual coordination | Automatic execution |
+| No audit trail               | Full public history         |
+| Manual coordination          | Automatic execution         |
 
 ---
 
@@ -76,6 +76,13 @@ QuorumForge makes the honest alternative easy:
 
 ---
 
+## Screenshots
+
+No screenshot files are included here; view the live demo instead:
+[https://quorumforge-app.vercel.app/board/CANU3HVHBFRT2CSZ73ZVDYKYNZMRP6J65KGO4QOTVA45AKORFA46UQ3V](https://quorumforge-app.vercel.app/board/CANU3HVHBFRT2CSZ73ZVDYKYNZMRP6J65KGO4QOTVA45AKORFA46UQ3V)
+
+---
+
 ## Architecture
 
 See [ARCHITECTURE.md](./docs/ARCHITECTURE.md) for the full system design, data flow diagrams, and Soroban contract interface specification.
@@ -84,19 +91,19 @@ See [ARCHITECTURE.md](./docs/ARCHITECTURE.md) for the full system design, data f
 
 ## Tech Stack
 
-| Layer | Technology |
-|-------|-----------|
-| Framework | Next.js 14 (App Router) |
-| Language | TypeScript 5 |
-| Styling | Tailwind CSS + shadcn/ui primitives |
-| Animations | Framer Motion |
-| Data fetching | TanStack React Query v5 |
-| Forms | React Hook Form + Zod |
-| Wallet | @stellar/freighter-api |
-| Stellar SDK | @stellar/stellar-sdk |
-| ORM | Prisma |
-| Database | PostgreSQL |
-| Deployment | Vercel (edge-compatible) |
+| Layer         | Technology                          |
+| ------------- | ----------------------------------- |
+| Framework     | Next.js 14 (App Router)             |
+| Language      | TypeScript 5                        |
+| Styling       | Tailwind CSS + shadcn/ui primitives |
+| Animations    | Framer Motion                       |
+| Data fetching | TanStack React Query v5             |
+| Forms         | React Hook Form + Zod               |
+| Wallet        | @stellar/freighter-api              |
+| Stellar SDK   | @stellar/stellar-sdk                |
+| ORM           | Prisma                              |
+| Database      | PostgreSQL                          |
+| Deployment    | Vercel (edge-compatible)            |
 
 ---
 
@@ -125,13 +132,13 @@ Copy the example file and fill in your values:
 cp .env.example .env.local
 ```
 
-| Variable | Required | Description |
-|----------|----------|-------------|
-| `DATABASE_URL` | ✅ | PostgreSQL connection string |
-| `NEXT_PUBLIC_APP_URL` | ✅ | Full app URL (e.g. `https://quorumforge.app`) |
-| `NEXT_PUBLIC_SOROBAN_RPC_TESTNET` | ✅ | Soroban RPC for testnet (default provided) |
-| `NEXT_PUBLIC_SOROBAN_RPC_MAINNET` | ✅ | Soroban RPC for mainnet |
-| `NOTIFICATION_WEBHOOK_URL` | ❌ | Webhook to call when proposals are created or expiring |
+| Variable                          | Required | Description                                            |
+| --------------------------------- | -------- | ------------------------------------------------------ |
+| `DATABASE_URL`                    | ✅       | PostgreSQL connection string                           |
+| `NEXT_PUBLIC_APP_URL`             | ✅       | Full app URL (e.g. `https://quorumforge.app`)          |
+| `NEXT_PUBLIC_SOROBAN_RPC_TESTNET` | ✅       | Soroban RPC for testnet (default provided)             |
+| `NEXT_PUBLIC_SOROBAN_RPC_MAINNET` | ✅       | Soroban RPC for mainnet                                |
+| `NOTIFICATION_WEBHOOK_URL`        | ❌       | Webhook to call when proposals are created or expiring |
 
 See [ENVIRONMENT.md](./docs/ENVIRONMENT.md) for detailed descriptions and example values.
 
