@@ -76,6 +76,14 @@ QuorumForge makes the honest alternative easy:
 
 ---
 
+## Screenshots
+
+The app is live on Stellar Testnet and includes the proposal dashboard, signer workflow, and on-chain governance board state. You can explore the live demo here:
+
+- [QuorumForge live board](https://quorumforge-app.vercel.app/board/CANU3HVHBFRT2CSZ73ZVDYKYNZMRP6J65KGO4QOTVA45AKORFA46UQ3V)
+
+---
+
 ## Architecture
 
 See [ARCHITECTURE.md](./docs/ARCHITECTURE.md) for the full system design, data flow diagrams, and Soroban contract interface specification.
