@@ -13,9 +13,9 @@
 
 To report a security issue, use one of the following channels:
 
-1. **GitHub Private Vulnerability Reporting** (preferred) — navigate to the [Security tab](https://github.com/your-org/quorumforge-app/security/advisories/new) of this repository and click "Report a vulnerability".
+1. **GitHub Private Vulnerability Reporting** (preferred) — navigate to the [Security tab](https://github.com/QuorumForge/quorumforge-app/security/advisories/new) of this repository and click "Report a vulnerability".
 
-2. **Email** — send details to `security@quorumforge.app`. Encrypt your message with our PGP key if the content is sensitive (key available on request).
+2. **Email** — use GitHub Private vulnerability reporting on this repository (recommended).
 
 ### What to include
 
