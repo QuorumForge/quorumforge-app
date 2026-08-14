@@ -76,6 +76,12 @@ QuorumForge makes the honest alternative easy:
 
 ---
 
+## Screenshots
+
+See the live demo in action: [quorumforge-app.vercel.app](https://quorumforge-app.vercel.app/board/CANU3HVHBFRT2CSZ73ZVDYKYNZMRP6J65KGO4QOTVA45AKORFA46UQ3V) — board creation, proposal lifecycle, real-time signature collection, and auto-execution all run live on Stellar Testnet.
+
+---
+
 ## Architecture
 
 See [ARCHITECTURE.md](./docs/ARCHITECTURE.md) for the full system design, data flow diagrams, and Soroban contract interface specification.
