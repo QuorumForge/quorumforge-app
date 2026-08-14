@@ -37,6 +37,14 @@ export function Footer() {
             >
               Soroban docs
             </a>
+            <a
+              href="https://github.com/QuorumForge"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1 hover:text-primary transition-colors"
+            >
+              GitHub <ExternalLink className="h-3 w-3" />
+            </a>
           </div>
         </div>
         <p className="text-[11px] text-foreground-secondary/70 mt-6">
