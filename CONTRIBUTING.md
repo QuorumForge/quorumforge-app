@@ -33,7 +33,7 @@ We follow the [Contributor Covenant](https://www.contributor-covenant.org/). Ple
 
 ### Reporting Bugs
 
-1. Search [existing issues](https://github.com/your-org/quorumforge-app/issues) to check if it's already reported.
+1. Search [existing issues](https://github.com/QuorumForge/quorumforge-app/issues) to check if it's already reported.
 2. If not, open a new issue with:
    - A clear, descriptive title
    - Steps to reproduce
@@ -44,7 +44,7 @@ We follow the [Contributor Covenant](https://www.contributor-covenant.org/). Ple
 
 ### Suggesting Features
 
-Open a [feature request issue](https://github.com/your-org/quorumforge-app/issues/new?template=feature_request.md) with:
+Open a [feature request issue](https://github.com/QuorumForge/quorumforge-app/issues/new) with:
 - The problem you're trying to solve
 - Your proposed solution
 - Any alternatives you considered
@@ -178,7 +178,7 @@ If you add a feature, please add a corresponding test if possible.
 
 ## Getting Help
 
-- Open a [GitHub Discussion](https://github.com/your-org/quorumforge-app/discussions) for questions.
+- Open a [GitHub Discussion](https://github.com/QuorumForge/quorumforge-app/discussions) for questions.
 - For security issues, see [SECURITY.md](../SECURITY.md).
 
 We appreciate every contribution, large or small. Thank you!

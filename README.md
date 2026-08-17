@@ -76,6 +76,12 @@ QuorumForge makes the honest alternative easy:
 
 ---
 
+## Screenshots
+
+The live Testnet demo is the best preview — open the [demo board](https://quorumforge-app.vercel.app/board/CANU3HVHBFRT2CSZ73ZVDYKYNZMRP6J65KGO4QOTVA45AKORFA46UQ3V) (no wallet required), switch to the **Executed** tab, and compare with [Stellar Expert](https://stellar.expert/explorer/testnet/contract/CANU3HVHBFRT2CSZ73ZVDYKYNZMRP6J65KGO4QOTVA45AKORFA46UQ3V).
+
+---
+
 ## Architecture
 
 See [ARCHITECTURE.md](./docs/ARCHITECTURE.md) for the full system design, data flow diagrams, and Soroban contract interface specification.
@@ -112,7 +118,7 @@ See [ARCHITECTURE.md](./docs/ARCHITECTURE.md) for the full system design, data f
 ### Installation
 
 ```bash
-git clone https://github.com/your-org/quorumforge-app.git
+git clone https://github.com/QuorumForge/quorumforge-app.git
 cd quorumforge-app
 npm install
 ```

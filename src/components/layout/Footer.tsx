@@ -30,6 +30,14 @@ export function Footer() {
               Contract on-chain <ExternalLink className="h-3 w-3" />
             </a>
             <a
+              href="https://github.com/QuorumForge"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-foreground transition-colors"
+            >
+              GitHub
+            </a>
+            <a
               href="https://soroban.stellar.org"
               target="_blank"
               rel="noopener noreferrer"
